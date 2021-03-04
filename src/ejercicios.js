@@ -60,27 +60,46 @@ console.clear();
 //     'Contraseña incorrecta' si la misma es
 //     incorrecta.
 class User {
+  constructor(nombre, edad, pass){
+    this.name = nombre;
+    this.age = edad;
+    this.password = pass;
+  }
   name = null;
   age = null;
   password = null;
   loggedIn = false;
+  
+  esMayor(){
+    age >= 18;
+  }
+  
   login(contraseña){
-    if (contraseña === this.password){
+    if (esMayor === true){
+
+      if (contraseña === this.password){
       this.loggedIn = true;
       imprimir(`Usuario ${this.name} ha iniciado sesión`);
       console.log(`Usuario ${this.name} ha iniciado sesión`);
-    }
-    else {
+      }
+      else {
       imprimir('Contraseña incorrecta');
       console.log('Contraseña incorrecta');
-    }
-      
+      } 
+  }
+  else{
+    imprimir('Debe ser mayor de edad para logearse');
+  }   
     }
   }
+  
+    
+  
+
+  const Juan = new User("Juan", 30, "1234");
+  Juan.login("1234");
 
 
-
-imprimir('Usuario [username] ha iniciado sesión');
 
 // =====================================================
 // 2. Crear la clase "Vendedor" a partir de la clase
@@ -100,15 +119,23 @@ imprimir('Usuario [username] ha iniciado sesión');
 //   - https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/push
 
 class Vendedor extends User {
-   
-  productos = [];
-  vender(descripcioProducto){     
-    productos.push(descripcioProducto)
+  productos = [];  
+  vender(descripcionProducto){  
+    if (this.loggedIn === true){
+      this.productos.push(descripcionProducto)
+    }
+    else{
+      imprimir('Debe estar logeado para poder vender');
+    }
   };
+  
 }
 
-const Juan = new User();
-const Maria = new Vendedor();
+
+const Maria = new Vendedor("Maria", 40, "123")
+Maria.login("123");
+Maria.vender("Arroz");
+
  
 
 // =====================================================
@@ -127,16 +154,26 @@ const Maria = new Vendedor();
 // Desde el metodo "comprar" se debe agregar el
 // producto vendido al vendedor, e imprimir el siguiente
 // texto de ejemplo:
+
 class Comprador extends User {
-  comprar(){    
+  comprar(Vendedor, descripcionProducto){ 
+    if (this.loggedIn === true){
+      Vendedor.productos.push(descripcionProducto);
+      imprimir([
+        `El vendedor ${Vendedor.username},ha vendido ${descripciónProducto},
+        a ${this.username}`
+      ]);
+    }   
   }
 }
 
-imprimir([
-  'El vendedor [vendedor.username]',
-  ' ha vendido [descripción producto]',
-  ' a [comprador.username]',
-]);
+const Pepe = new Comprador("Pepe", 50, "12");
+Pepe.login("12");
+Pepe.comprar(Maria, "pan");
+
+ 
+
+
 
 // =====================================================
 // 4. Modificar las clases anteriores y agregar un
