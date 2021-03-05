@@ -69,27 +69,31 @@ class User {
   age = null;
   password = null;
   loggedIn = false;
+  mayorEdad = false;
   
   esMayor(){
-    age >= 18;
+    if (this.age >= 18){
+      return this.mayorEdad === true;
+    }
   }
+  //ESTE METODO DEBERIA MODIFICAR LA EDAD DE LA INSTANCIA
   
   login(contraseña){
-    if (esMayor === true){
+    esMayor();
+    if (this.mayorEdad === true){
 
       if (contraseña === this.password){
       this.loggedIn = true;
       imprimir(`Usuario ${this.name} ha iniciado sesión`);
-      console.log(`Usuario ${this.name} ha iniciado sesión`);
       }
       else {
       imprimir('Contraseña incorrecta');
       console.log('Contraseña incorrecta');
       } 
-  }
-  else{
-    imprimir('Debe ser mayor de edad para logearse');
-  }   
+    }
+    else{
+      imprimir('Debe ser mayor de edad para logearse');
+     }   
     }
   }
   
@@ -172,7 +176,8 @@ Pepe.login("12");
 Pepe.comprar(Maria, "pan");
 
  
-
+/*NOTA: EN EL METODO COMPRAR(), NO SE COMO AGREGAR EL PRODUCTO PASADO COMO PARAMETRO AL 
+ARRAY DEL VENDEDOR*/
 
 
 // =====================================================
