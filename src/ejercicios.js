@@ -71,31 +71,20 @@ class User {
   loggedIn = false;
   mayorEdad = false;
   
-  esMayor(){
-    if (this.age >= 18){
-      return this.mayorEdad === true;
-    }
-  }
-  //ESTE METODO DEBERIA MODIFICAR LA EDAD DE LA INSTANCIA
   
   login(contraseña){
-    esMayor();
-    if (this.mayorEdad === true){
-
-      if (contraseña === this.password){
-      this.loggedIn = true;
-      imprimir(`Usuario ${this.name} ha iniciado sesión`);
-      }
-      else {
-      imprimir('Contraseña incorrecta');
-      console.log('Contraseña incorrecta');
-      } 
+    if (contraseña === this.password){
+    this.loggedIn = true;
+    imprimir(`Usuario ${this.name} ha iniciado sesión`);
     }
-    else{
-      imprimir('Debe ser mayor de edad para logearse');
-     }   
-    }
+    else {
+    imprimir('Contraseña incorrecta');
+    console.log('Contraseña incorrecta');
+    } 
   }
+}
+    
+  
   
     
   
@@ -131,7 +120,27 @@ class Vendedor extends User {
     else{
       imprimir('Debe estar logeado para poder vender');
     }
-  };
+  };  
+  esMayor(){
+    if (this.age >= 18){
+      this.mayorEdad = true;
+    }
+  }
+  login(contraseña){
+    this.esMayor()
+    if (this.mayorEdad === true){
+
+      if (contraseña === this.password){
+        this.loggedIn = true;
+        imprimir(`Usuario ${this.name} ha iniciado sesión`);
+        }
+      else {
+        imprimir('Contraseña incorrecta');        
+      }
+    }
+    else {imprimir("Debes ser mayor de edad")};  
+    
+  }
   
 }
 
@@ -139,6 +148,7 @@ class Vendedor extends User {
 const Maria = new Vendedor("Maria", 40, "123")
 Maria.login("123");
 Maria.vender("Arroz");
+Maria.vender("Ajo");
 
  
 
@@ -160,20 +170,41 @@ Maria.vender("Arroz");
 // texto de ejemplo:
 
 class Comprador extends User {
-  comprar(Vendedor, descripcionProducto){ 
-    if (this.loggedIn === true){
-      Vendedor.productos.push(descripcionProducto);
+  descripcionProducto = []; 
+  comprar(vendedor, descripcionProducto){ 
+    if (this.loggedIn === true){     
+      vendedor.productos.push(descripcionProducto);
       imprimir([
-        `El vendedor ${Vendedor.username},ha vendido ${descripciónProducto},
+        `El vendedor ${vendedor.username},ha vendido ${descripciónProducto},
         a ${this.username}`
       ]);
     }   
+  }
+  esMayor(){
+    if (this.age >= 18){
+      this.mayorEdad = true;
+    }
+  }
+  login(contraseña){
+    this.esMayor()
+    if (this.mayorEdad === true){
+
+      if (contraseña === this.password){
+        this.loggedIn = true;
+        imprimir(`Usuario ${this.name} ha iniciado sesión`);
+        }
+      else {
+        imprimir('Contraseña incorrecta');        
+      }
+    }
+    else {imprimir("Debes ser mayor de edad")};  
+    
   }
 }
 
 const Pepe = new Comprador("Pepe", 50, "12");
 Pepe.login("12");
-Pepe.comprar(Maria, "pan");
+//Pepe.comprar(Maria, "pan");
 
  
 /*NOTA: EN EL METODO COMPRAR(), NO SE COMO AGREGAR EL PRODUCTO PASADO COMO PARAMETRO AL 
